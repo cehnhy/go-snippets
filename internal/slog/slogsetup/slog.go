@@ -1,10 +1,12 @@
-package slog
+package slogsetup
 
 import (
 	"io"
 	"log/slog"
 	"strings"
 	"sync"
+
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 var onceSetLogger sync.Once
@@ -41,6 +43,14 @@ func SetText(app, level string, w io.Writer) {
 	onceSetLogger.Do(func() {
 		slog.SetDefault(logger)
 	})
+}
+
+func WithRolling(filename string, w io.Writer) io.Writer {
+	logger := &lumberjack.Logger{
+		Filename:  filename,
+		LocalTime: true,
+	}
+	return io.MultiWriter(w, logger)
 }
 
 func parseLevel(level string) slog.Level {

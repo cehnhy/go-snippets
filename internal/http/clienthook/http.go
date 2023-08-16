@@ -1,4 +1,4 @@
-package http
+package clienthook
 
 import "net/http"
 

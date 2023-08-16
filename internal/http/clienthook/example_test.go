@@ -1,4 +1,4 @@
-package http_test
+package clienthook_test
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	internalhttp "github.com/cehnhy/go-snippets/internal/http"
+	"github.com/cehnhy/go-snippets/internal/http/clienthook"
 )
 
 func ExampleNewTransport() {
@@ -14,7 +14,7 @@ func ExampleNewTransport() {
 		ctx := req.Context()
 		fmt.Println(ctx.Value("key"))
 	}
-	transport := internalhttp.NewTransport(nil, hook)
+	transport := clienthook.NewTransport(nil, hook)
 	client := http.Client{
 		Transport: transport,
 	}

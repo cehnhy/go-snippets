@@ -1,4 +1,4 @@
-package slog_test
+package slogsetup_test
 
 import (
 	"log"
@@ -8,7 +8,7 @@ import (
 
 	"bou.ke/monkey"
 
-	internalslog "github.com/cehnhy/go-snippets/internal/slog"
+	"github.com/cehnhy/go-snippets/internal/slog/slogsetup"
 )
 
 func patchTime() {
@@ -20,7 +20,7 @@ func patchTime() {
 func ExampleSetJSON() {
 	patchTime()
 
-	internalslog.SetJSON("go-snippets", "info", os.Stdout)
+	slogsetup.SetJSON("go-snippets", "info", os.Stdout)
 	log.Println("println message")
 	slog.Debug("debug message") // no output
 	slog.Info("info message")
@@ -36,7 +36,7 @@ func ExampleSetJSON() {
 func ExampleSetText() {
 	patchTime()
 
-	internalslog.SetText("go-snippets", "info", os.Stdout)
+	slogsetup.SetText("go-snippets", "info", os.Stdout)
 	log.Println("println message")
 	slog.Debug("debug message") // no output
 	slog.Info("info message")
@@ -52,8 +52,8 @@ func ExampleSetText() {
 func ExampleWithRolling() {
 	patchTime()
 
-	w := internalslog.WithRolling("go-snippets.log", os.Stdout)
-	internalslog.SetText("go-snippets", "info", w)
+	w := slogsetup.WithRolling("go-snippets.log", os.Stdout)
+	slogsetup.SetText("go-snippets", "info", w)
 	log.Println("println message")
 	slog.Debug("debug message") // no output
 	slog.Info("info message")
