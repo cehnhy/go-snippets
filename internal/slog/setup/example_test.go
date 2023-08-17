@@ -1,4 +1,4 @@
-package slogsetup_test
+package setup_test
 
 import (
 	"log"
@@ -8,7 +8,7 @@ import (
 
 	"bou.ke/monkey"
 
-	"github.com/cehnhy/go-snippets/internal/slog/slogsetup"
+	"github.com/cehnhy/go-snippets/internal/slog/setup"
 )
 
 func patchTime() {
@@ -20,12 +20,13 @@ func patchTime() {
 func ExampleSetJSON() {
 	patchTime()
 
-	slogsetup.SetJSON("go-snippets", "info", os.Stdout)
+	setup.SetJSON("go-snippets", "info", os.Stdout)
 	log.Println("println message")
 	slog.Debug("debug message") // no output
 	slog.Info("info message")
 	slog.Warn("warn message", "key", "value")
 	slog.Error("error message", slog.String("key", "value"))
+
 	// Output:
 	// {"time":"2023-08-16T00:00:00Z","level":"INFO","msg":"println message"}
 	// {"time":"2023-08-16T00:00:00Z","level":"INFO","msg":"info message"}
@@ -36,12 +37,13 @@ func ExampleSetJSON() {
 func ExampleSetText() {
 	patchTime()
 
-	slogsetup.SetText("go-snippets", "info", os.Stdout)
+	setup.SetText("go-snippets", "info", os.Stdout)
 	log.Println("println message")
 	slog.Debug("debug message") // no output
 	slog.Info("info message")
 	slog.Warn("warn message", "key", "value")
 	slog.Error("error message", slog.String("key", "value"))
+
 	// Output:
 	// time=2023-08-16T00:00:00.000Z level=INFO msg="println message"
 	// time=2023-08-16T00:00:00.000Z level=INFO msg="info message"
@@ -52,13 +54,14 @@ func ExampleSetText() {
 func ExampleWithRolling() {
 	patchTime()
 
-	w := slogsetup.WithRolling("go-snippets.log", os.Stdout)
-	slogsetup.SetText("go-snippets", "info", w)
+	w := setup.WithRolling("go-snippets.log", os.Stdout)
+	setup.SetText("go-snippets", "info", w)
 	log.Println("println message")
 	slog.Debug("debug message") // no output
 	slog.Info("info message")
 	slog.Warn("warn message", "key", "value")
 	slog.Error("error message", slog.String("key", "value"))
+
 	// Output:
 	// time=2023-08-16T00:00:00.000Z level=INFO msg="println message"
 	// time=2023-08-16T00:00:00.000Z level=INFO msg="info message"

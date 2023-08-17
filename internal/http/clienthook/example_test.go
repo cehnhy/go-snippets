@@ -30,6 +30,7 @@ func ExampleNewTransport() {
 		log.Fatal(err)
 	}
 	defer resp.Body.Close()
+
 	// Output:
 	// value
 }

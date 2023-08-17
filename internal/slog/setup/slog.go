@@ -1,16 +1,14 @@
-package slogsetup
+package setup
 
 import (
 	"io"
 	"log/slog"
 	"strings"
-	"sync"
 
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-var onceSetLogger sync.Once
-
+// SetJSON
 func SetJSON(app, level string, w io.Writer) {
 	handler := slog.NewJSONHandler(w,
 		&slog.HandlerOptions{
@@ -23,11 +21,10 @@ func SetJSON(app, level string, w io.Writer) {
 		logger = logger.WithGroup(app)
 	}
 
-	onceSetLogger.Do(func() {
-		slog.SetDefault(logger)
-	})
+	slog.SetDefault(logger)
 }
 
+// SetText
 func SetText(app, level string, w io.Writer) {
 	handler := slog.NewTextHandler(w,
 		&slog.HandlerOptions{
@@ -40,11 +37,10 @@ func SetText(app, level string, w io.Writer) {
 		logger = logger.WithGroup(app)
 	}
 
-	onceSetLogger.Do(func() {
-		slog.SetDefault(logger)
-	})
+	slog.SetDefault(logger)
 }
 
+// WithRolling
 func WithRolling(filename string, w io.Writer) io.Writer {
 	logger := &lumberjack.Logger{
 		Filename:  filename,
